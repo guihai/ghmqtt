@@ -10,3 +10,20 @@
 
 # 链接测试
 - 101.34.230.242:1883
+
+# 使用例子
+```go
+package main
+
+import (
+	"github.com/guihai/ghmqtt/mqtt311/server"
+)
+
+func main() {
+	
+	GHmqtt := server.NewGHapi()
+
+	GHmqtt.Run()
+
+}
+```
