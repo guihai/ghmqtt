@@ -6,7 +6,6 @@ import (
 	"github.com/guihai/ghmqtt/utils/zaplog"
 	"go.uber.org/zap"
 	"hash/fnv"
-	"strconv"
 )
 
 /*
@@ -53,38 +52,38 @@ func newRouterManager() *RouterManager {
 		poolOn: false, // 协程池未启动
 	}
 
-	//// 实现默认的 断开链接路由器
-	//r.AddRouter(proto.DISCONNECT, &DisconnectRouter{})
-	//// 默认的 心跳路由
-	//r.AddRouter(proto.PINGREQ, &PINGREQRouter{})
-	//// 默认的订阅 路由
-	//r.AddRouter(proto.SUBSCRIBE, &SUBSCRIBERouter{})
-	//// 默认取消订阅 路由
-	//r.AddRouter(proto.UNSUBSCRIBE, &UNSUBSCRIBERouter{})
+	// 实现默认的 断开链接路由器
+	r.addRouter(proto.DISCONNECT, &DISCONNECTRouter{})
+	// 默认的 心跳路由
+	r.addRouter(proto.PINGREQ, &PINGREQRouter{})
+	// 默认的订阅 路由
+	r.addRouter(proto.SUBSCRIBE, &SUBSCRIBERouter{})
+	// 默认取消订阅 路由
+	r.addRouter(proto.UNSUBSCRIBE, &UNSUBSCRIBERouter{})
+
+	//  默认发布协议  48 路由
+	r.addRouter(proto.PUBLISH, &PUBLISHRouter{})
+	// 发布协议 49 路由 有保留信息标志
+	r.addRouter(proto.PUBLISH31, &PUBLISHRouter{})
+
+	// 发布协议 50 路由
+	r.addRouter(proto.PUBLISH32, &PUBLISHRouter{})
+	// 发布协议 51 路由
+	r.addRouter(proto.PUBLISH33, &PUBLISHRouter{})
+
+	// 发布协议 52 路由
+	r.addRouter(proto.PUBLISH34, &PUBLISHRouter{})
+
+	// 发布消息响应路由
+	r.addRouter(proto.PUBACK, &PUBACKRouter{})
+
+	// 释放消息协议 Qos2 流程
+	r.addRouter(proto.PUBREL, &PUBRELRouter{})
+
 	//
-	////  默认发布协议  48 路由
-	//r.AddRouter(proto.PUBLISH, &PUBLISHRouter{})
-	//// 发布协议 49 路由 有保留信息标志
-	//r.AddRouter(proto.PUBLISH31, &PUBLISHRouter{})
-	//
-	//// 发布协议 50 路由
-	//r.AddRouter(proto.PUBLISH32, &PUBLISHRouter{})
-	//// 发布协议 51 路由
-	//r.AddRouter(proto.PUBLISH33, &PUBLISHRouter{})
-	//
-	//// 发布协议 52 路由
-	//r.AddRouter(proto.PUBLISH34, &PUBLISHRouter{})
-	//
-	//// 发布消息响应路由
-	//r.AddRouter(proto.PUBACK, &PUBACKRouter{})
-	//
-	//// 释放消息协议 Qos2 流程
-	//r.AddRouter(proto.PUBREL, &PUBRELRouter{})
-	//
-	////
-	//r.AddRouter(proto.PUBREC, &PUBRECRouter{})
-	//
-	//r.AddRouter(proto.PUBCOMP, &PUBCOMPRouter{})
+	r.addRouter(proto.PUBREC, &PUBRECRouter{})
+
+	r.addRouter(proto.PUBCOMP, &PUBCOMPRouter{})
 
 	return r
 
@@ -104,11 +103,7 @@ func (s *RouterManager) setConnectVerify(cvf ConnectVerifyFUNC) {
 */
 func (s *RouterManager) addRouter(i uint8, router ImplBaseRouter) {
 
-	//1 判断当前协议类型 是否已经存在
-	if _, ok := s.routerMap[i]; ok {
-		panic("不能添加重复的 协议路由，协议数值  " + strconv.Itoa(int(i)))
-	}
-	//2 添加到map
+	//新路由会覆盖默认路由 添加到map
 	s.routerMap[i] = router
 	//fmt.Println("路由添加成功 = ", i)
 }
