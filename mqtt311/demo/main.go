@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/guihai/ghmqtt/mqtt311/demo/router"
 	"github.com/guihai/ghmqtt/mqtt311/proto"
 	"github.com/guihai/ghmqtt/mqtt311/server"
@@ -17,24 +16,8 @@ func main() {
 	// 注册路由
 	addRouter(GHmqtt)
 
-	// 开启 http 服务
-	go httpRun()
-
-	router.MQTTAPI = GHmqtt
-
 	GHmqtt.Run()
 
-}
-
-// 开启 http 服务进行管理
-func httpRun() {
-	gin.SetMode(gin.ReleaseMode)
-	r := gin.Default()
-	r.Use(gin.Recovery())
-
-	router.RouterInit(r)
-
-	r.Run(":31180") // 监听并在 0.0.0.0:8080 上启动服务
 }
 
 //注册路由
