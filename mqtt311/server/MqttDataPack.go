@@ -339,11 +339,17 @@ func (s *MqttDataPack) unPackCONNECTProtocol(conn *Conn) (*proto.CONNECTProtocol
 	if err != nil {
 		return nil, proto.Refused_u_p_v, err
 	}
+	// 链接协议头部长度检测  至少10个
+	if f.MsgLen < 10 {
+		return nil, proto.Refused_u_p_v, err
+
+	}
 
 	// 创造协议
 	p := &proto.CONNECTProtocol{
-		Fixed:          f,
-		ProtoNameLen:   0,
+		Fixed: f,
+		//ProtoNameLen:   0,
+		ProtoNameLen:   4, // 默认就是4
 		ProtoName:      "",
 		Version:        0,
 		ConnectFlag:    0,
@@ -360,8 +366,8 @@ func (s *MqttDataPack) unPackCONNECTProtocol(conn *Conn) (*proto.CONNECTProtocol
 	daBy := f.Data
 
 	// 计算标识符id  大端编码 字节写入数字
-	binary.Read(bytes.NewBuffer(daBy[:2]),
-		binary.BigEndian, &p.ProtoNameLen)
+	//binary.Read(bytes.NewBuffer(daBy[:2]),
+	//	binary.BigEndian, &p.ProtoNameLen)  使用默认值4
 
 	p.ProtoName = string(daBy[2:(2 + p.ProtoNameLen)]) // 从 索引[2] 取对应长度值
 	p.Version = daBy[2+p.ProtoNameLen]                 // 版本号  4 == 版本 3.1.1

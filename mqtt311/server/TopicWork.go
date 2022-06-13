@@ -97,6 +97,11 @@ func (s *TopicWork) startWorker(i int, pubs chan *proto.PUBLISHProtocol) {
 func (s *TopicWork) sendReqToTaskQueue(pub *proto.PUBLISHProtocol) {
 	// 采用 链接id 取余数 放入对应的消息队列
 	cid := pub.TopicName
+
+	// 禁止 # ， /  和 $ 符数据
+	if cid == "#" || cid == "/" || strings.Contains(cid, "$") {
+		return
+	}
 	//pid := request.Proto.GetHeaderFlag()
 
 	rand.Seed(time.Now().Unix())
@@ -179,7 +184,7 @@ func (s *TopicWork) matchSend(topic string, data []byte) {
 在根据主题列表，在订阅用户中获取订阅者，每个订阅者只获取一次
 */
 func (s *TopicWork) matchTopic(topic string) []string {
-	if len(topic) == 1 && (topic == "/" || topic == "#") {
+	if len(topic) == 1 && (topic == "/" || topic == "#") && strings.Contains(topic, "$") {
 		return []string{}
 	}
 	tp := strings.Split(topic, "/")
