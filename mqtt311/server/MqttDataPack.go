@@ -454,7 +454,7 @@ func (s *MqttDataPack) unPackCONNECTProtocol(conn *Conn) (*proto.CONNECTProtocol
 		}
 
 		// 以上获取遗嘱完成  修改剩余 字节的长度  必须修改
-		daByp2 = daByp2[2+p.ClientIDLength+2+p.WillMessageLength+1:]
+		daByp2 = daByp2[2+p.WillTopicLength+2+p.WillMessageLength:]
 
 	}
 
