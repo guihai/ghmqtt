@@ -11,7 +11,7 @@
 - mqtt.bijiaox.com
 - 端口 1883
 
-# 使用例子
+# 3.1.1版本使用例子
 ```go
 package main
 
@@ -21,6 +21,22 @@ import (
 
 func main() {
 	
+	GHmqtt := server.NewGHapi()
+
+	GHmqtt.Run()
+
+}
+```
+# mqtt5 版本使用案例
+```go
+package main
+
+import (
+	"github.com/guihai/ghmqtt/mqtt5/server"
+)
+
+func main() {
+
 	GHmqtt := server.NewGHapi()
 
 	GHmqtt.Run()
