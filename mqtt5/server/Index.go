@@ -1,9 +1,9 @@
 package server
 
 import (
-	"hshiye/tvl2mqtt/mqtt5/proto"
-	"hshiye/tvl2mqtt/mqtt5/server/types"
-	"hshiye/tvl2mqtt/utils"
+	"github.com/guihai/ghmqtt/mqtt5/proto"
+	"github.com/guihai/ghmqtt/mqtt5/server/types"
+	"github.com/guihai/ghmqtt/utils"
 	"math/rand"
 	"time"
 )

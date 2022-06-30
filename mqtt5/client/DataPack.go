@@ -2,7 +2,7 @@ package client
 
 import (
 	"errors"
-	"hshiye/tvl2mqtt/mqtt5/proto"
+	"github.com/guihai/ghmqtt/mqtt5/proto"
 	"io"
 	"net"
 )

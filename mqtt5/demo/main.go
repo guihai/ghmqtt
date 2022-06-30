@@ -1,9 +1,9 @@
 package main
 
 import (
-	"hshiye/tvl2mqtt/mqtt5/demo/router"
-	"hshiye/tvl2mqtt/mqtt5/proto"
-	"hshiye/tvl2mqtt/mqtt5/server"
+	"github.com/guihai/ghmqtt/mqtt5/demo/router"
+	"github.com/guihai/ghmqtt/mqtt5/proto"
+	"github.com/guihai/ghmqtt/mqtt5/server"
 )
 
 func main() {

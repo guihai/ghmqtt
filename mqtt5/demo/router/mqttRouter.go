@@ -2,8 +2,8 @@ package router
 
 import (
 	"fmt"
-	"hshiye/tvl2mqtt/mqtt5/proto"
-	"hshiye/tvl2mqtt/mqtt5/server"
+	"github.com/guihai/ghmqtt/mqtt5/proto"
+	"github.com/guihai/ghmqtt/mqtt5/server"
 )
 
 // 实现链接验证方法

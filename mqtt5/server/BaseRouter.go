@@ -2,7 +2,7 @@ package server
 
 import (
 	"fmt"
-	"hshiye/tvl2mqtt/mqtt5/proto"
+	"github.com/guihai/ghmqtt/mqtt5/proto"
 )
 
 type ImplBaseRouter interface {

@@ -1,7 +1,7 @@
 package types
 
 import (
-	"hshiye/tvl2mqtt/utils"
+	"github.com/guihai/ghmqtt/utils"
 )
 
 // 响应结构体

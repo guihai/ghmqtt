@@ -3,7 +3,7 @@ package server
 import (
 	"encoding/binary"
 	"errors"
-	"hshiye/tvl2mqtt/mqtt5/proto"
+	"github.com/guihai/ghmqtt/mqtt5/proto"
 	"io"
 )
 

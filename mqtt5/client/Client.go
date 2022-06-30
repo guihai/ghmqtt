@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 	"fmt"
-	"hshiye/tvl2mqtt/mqtt5/proto"
+	"github.com/guihai/ghmqtt/mqtt5/proto"
 	"net"
 )
 
